@@ -1,0 +1,51 @@
+import utils
+
+class Book():
+    def __init__(self):
+        self.file = 'prueba.txt'
+        self.alphabet = 'qwertyuiopasdfghjklñzxcvbnmáéíóúüQWERTYUIOPASDFGHJKLñZXCVBNMÁÉÍÓÚÜ'
+        self.wordsDict = self.counter()
+        self.totalWords = sum(self.wordsDict.values())
+        self.characters = self.findingNames()
+        print(self.characters)
+
+    def conversor(self):  
+        cache = '(\''
+        text = open(self.file)
+        for character in text.read():
+            if character == ' ':
+                character = '\', \''
+                cache = cache + character
+            elif character not in self.alphabet:
+                pass 
+            else:
+                cache = cache + character.lower()
+        cache = cache + '\')'
+        text.close()
+        return cache
+        
+    def counter(self):
+        array = eval(self.conversor())
+        counterDict = {}
+        for i in array:
+            if i not in counterDict:
+                counterDict[i] = 1
+            elif i in counterDict:
+                counterDict[i] = counterDict.get(i) + 1
+        return counterDict
+
+
+    def findingNames(self):
+        characters =[]
+        languageWords = utils.listDictionary('diccionario_español.txt')
+        for i in self.wordsDict.keys():
+            if i in languageWords:
+                print(i)
+                pass
+            else:
+                characters.append(i)
+        return characters
+
+
+book1 = Book()
+print(book1.totalWords)
